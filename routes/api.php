@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\DepartmentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,6 @@ Route::middleware('api')->group(function () {
     Route::get('refresh', [AuthController::class, 'refresh']);
 
     Route::resource('department', DepartmentController::class);
+
+    Route::resource('book', BookController::class);
 });
