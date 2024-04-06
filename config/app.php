@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         App\Providers\DepartmentServiceProvider::class,
+        App\Providers\BookServiceProvider::class,
     ])->toArray(),
 
     /*
