@@ -9,35 +9,35 @@ class DepartmentController extends Controller
 {
     private DepartmentRepositoryInterface $department;
 
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
-        $departments = $this->$department->all();
+        $departments = $this->department->all();
         return response()->json($departments);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->all();
-        $department = $this->$department->create($data);
+        $department = $this->department->create($data);
         return response()->json($department);
     }
 
-    public function show($id)
+    public function show($id): \Illuminate\Http\JsonResponse
     {
-        $department = $this->$department->find($id);
+        $department = $this->department->find($id);
         return response()->json($department);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): \Illuminate\Http\JsonResponse
     {
         $data = $request->all();
-        $department = $this->$department->update($id, $data);
+        $department = $this->department->update($id, $data);
         return response()->json($department);
     }
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\JsonResponse
     {
-        $department = $this->$department->delete($id);
+        $department = $this->department->delete($id);
         return response()->json($department);
     }
 }
