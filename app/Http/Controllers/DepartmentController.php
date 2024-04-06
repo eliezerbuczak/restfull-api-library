@@ -9,6 +9,11 @@ class DepartmentController extends Controller
 {
     private DepartmentRepositoryInterface $department;
 
+    public function __construct(DepartmentRepositoryInterface $department)
+    {
+        $this->department = $department;
+    }
+
     public function index(): \Illuminate\Http\JsonResponse
     {
         $departments = $this->department->all();

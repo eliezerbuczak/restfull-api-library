@@ -19,12 +19,16 @@ abstract class BaseRepository
 
     public function create($data)
     {
+        $user = auth()->user();
+        $data['id_user_created'] = $user->id;
         return $this->model->create($data);
     }
 
     public function update($id, $data)
     {
         $model = $this->find($id);
+        $user = auth()->user();
+        $data['id_user_updated'] = $user->id;
         return $model->update($data);
     }
 

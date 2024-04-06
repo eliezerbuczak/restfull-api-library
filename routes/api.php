@@ -22,5 +22,5 @@ Route::middleware('api')->group(function () {
     Route::get('user', [AuthController::class, 'user']);
     Route::get('refresh', [AuthController::class, 'refresh']);
 
-    Route::resource('departments', DepartmentController::class);
+    Route::resource('department', DepartmentController::class);
 });
