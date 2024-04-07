@@ -171,6 +171,7 @@ return [
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         App\Providers\DepartmentServiceProvider::class,
         App\Providers\BookServiceProvider::class,
+        App\Providers\LoanServiceProvider::class,
     ])->toArray(),
 
     /*
