@@ -17,6 +17,12 @@ class LoanController extends Controller
     public function index(): \Illuminate\Http\JsonResponse
     {
         $loans = $this->loan->all();
+        if (isset($loans['message'])) {
+            return response()->json($loans, 404);
+        }
+        if(isset($loans['error'])){
+            return response()->json($loans, 500);
+        }
         return response()->json($loans);
     }
 
@@ -24,12 +30,21 @@ class LoanController extends Controller
     {
         $data = $request->all();
         $loan = $this->loan->create($data);
+        if(isset($loan['error'])){
+            return response()->json($loan, 500);
+        }
         return response()->json($loan);
     }
 
     public function show($id): \Illuminate\Http\JsonResponse
     {
         $loan = $this->loan->find($id);
+        if (isset($loan['message'])) {
+            return response()->json($loan, 404);
+        }
+        if(isset($loan['error'])){
+            return response()->json($loan, 500);
+        }
         return response()->json($loan);
     }
 
@@ -37,18 +52,37 @@ class LoanController extends Controller
     {
         $data = $request->all();
         $loan = $this->loan->update($id, $data);
+        if(isset($loan['message'])){
+            return response()->json($loan, 404);
+        }
+        if(isset($loan['error'])){
+            return response()->json($loan, 500);
+        }
+
         return response()->json($loan);
     }
 
     public function destroy($id): \Illuminate\Http\JsonResponse
     {
         $loan = $this->loan->delete($id);
+        if(isset($loan['message'])){
+            return response()->json($loan, 404);
+        }
+        if(isset($loan['error'])){
+            return response()->json($loan, 500);
+        }
         return response()->json($loan);
     }
 
     public function return($id): \Illuminate\Http\JsonResponse
     {
         $loan = $this->loan->return($id);
+        if(isset($loan['message'])){
+            return response()->json($loan, 404);
+        }
+        if(isset($loan['error'])){
+            return response()->json($loan, 500);
+        }
         return response()->json($loan);
     }
 
