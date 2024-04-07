@@ -17,6 +17,7 @@ return new class extends Migration
             $table->softDeletes();
             $table->date('loan_date');
             $table->date('return_date');
+            $table->string('status');
             $table->foreignId('id_book')->constrained('books');
             $table->foreignId('id_user')->constrained('users');
             $table->foreignId('id_user_created')->constrained('users');

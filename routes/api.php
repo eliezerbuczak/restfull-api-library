@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\LoanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +27,8 @@ Route::middleware('api')->group(function () {
     Route::resource('department', DepartmentController::class);
 
     Route::resource('book', BookController::class);
+
+    Route::resource('loan', LoanController::class);
+
+    Route::put('loan/{id}/return', [LoanController::class, 'return']);
 });
