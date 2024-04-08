@@ -3,6 +3,7 @@
 namespace App\Repositories\Eloquent;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Redis;
 
 abstract class BaseRepository
 {
@@ -10,13 +11,18 @@ abstract class BaseRepository
     public function all()
     {
         try {
+            if (Redis::exists($this->model->getTable())) {
+                $data = Redis::get($this->model->getTable());
+                return json_decode($data);
+            }
             $model = $this->model->all();
             if ($model) {
+                $data = json_encode($model);
+                Redis::set($this->model->getTable(), $data);
                 return $model;
             }
             return [
                 'message' => 'Record not found',
-
             ];
         } catch (\Exception $e) {
             return [
@@ -28,8 +34,15 @@ abstract class BaseRepository
     public function find($id)
     {
         try {
+            if (Redis::exists($this->model->getTable() . ':' . $id)) {
+                $data = Redis::get($this->model->getTable() . ':' . $id);
+                return json_decode($data);
+            }
+
             $model = $this->model->find($id);
             if ($model) {
+                $data = json_encode($model);
+                Redis::set($this->model->getTable() . ':' . $id, $data);
                 return $model;
             }
             return [
@@ -48,6 +61,7 @@ abstract class BaseRepository
             $user = auth()->user();
             $data['id_user_created'] = $user->id;
             $model = $this->model->create($data);
+            Redis::del($this->model->getTable());
             return $model;
         } catch (\Exception $e) {
             return [
@@ -64,6 +78,7 @@ abstract class BaseRepository
             $data['id_user_updated'] = $user->id;
             if($model){
                 $model->update($data);
+                Redis::del($this->model->getTable());
                 return $model;
             }
             return [
@@ -82,6 +97,7 @@ abstract class BaseRepository
             $model = $this->model->find($id);
             if($model){
                 $model->delete();
+                Redis::del($this->model->getTable());
                 return $model;
             }
             return [
